@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] float attackCooldown;
+    [SerializeField] private float attackCooldown;
     private Animator animasi;
     private PlayerMovement playerMovement;
-    private float cooldownTimer;
+    private float cooldownTimer = Mathf.Infinity;
 
     private void Awake()
     {
@@ -21,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetMouseButton(0) && cooldownTimer > attackCooldown && playerMovement.canAttack()){
             buttonAttack();
         }
+        cooldownTimer += Time.deltaTime;
     }
     private void buttonAttack(){
         animasi.SetTrigger("attack");

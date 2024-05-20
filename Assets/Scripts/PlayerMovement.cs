@@ -52,13 +52,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log($"this on wall, {onWall()}");
                 Debug.Log($"this on ground, {isGrounded()}");
             }
-            if(Input.GetKey(KeyCode.Space)){
-                JumpButton();
-            }
-            if(Input.GetKey(KeyCode.UpArrow)){
-                JumpButton();
-            }
-            if(Input.GetKey(KeyCode.W)){
+            if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)){
                 JumpButton();
             }
         }else{
