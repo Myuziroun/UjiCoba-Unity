@@ -1,16 +1,18 @@
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private float speed = 10f;
-    private float jump = 5f;
+    private float jumpPower = 5f;
     [SerializeField]private LayerMask groundLayer;
     [SerializeField]private LayerMask wallLayer;
     private Rigidbody2D badan;
     private Animator animasi;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
+    private float moveHorizontal;
     
     private void Awake(){
         // Untuk mendapatkan preference pada Rigidbody2D, Animator, BoxCollider2D dari objek
@@ -21,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update(){
         // Logic untuk berjalan pada kekanan dan kekiri
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        moveHorizontal = Input.GetAxis("Horizontal");
+        badan.velocity = new Vector2(moveHorizontal * speed, badan.velocity.y);
        
         // Untuk berubah arah pada karakter.
         if(moveHorizontal > 0.01f) {
@@ -38,23 +41,46 @@ public class PlayerMovement : MonoBehaviour
 
         if(wallJumpCooldown < 0.2f){
             // Logic Unutk  melompat
-            if(Input.GetKey(KeyCode.Space) && isGrounded()){
+            if(onWall() && !isGrounded()){
+                badan.gravityScale = 0;
+                badan.velocity = Vector2.zero;
+                Debug.Log($"this on wall, {onWall()}");
+                Debug.Log($"this on ground, {isGrounded()}");
+            }
+            else{
+                badan.gravityScale = 1;
+                Debug.Log($"this on wall, {onWall()}");
+                Debug.Log($"this on ground, {isGrounded()}");
+            }
+            if(Input.GetKey(KeyCode.Space)){
                 JumpButton();
             }
-            if(Input.GetKey(KeyCode.UpArrow) && isGrounded()){
+            if(Input.GetKey(KeyCode.UpArrow)){
                 JumpButton();
             }
-            if(Input.GetKey(KeyCode.W) && isGrounded()){
+            if(Input.GetKey(KeyCode.W)){
                 JumpButton();
             }
-             badan.velocity = new Vector2(moveHorizontal * speed, badan.velocity.y);
+        }else{
+            wallJumpCooldown += Time.deltaTime;
         }
     }
 
     // untuk melakukan lompatan
     private void JumpButton(){
-        badan.velocity = new Vector2(badan.velocity.x, jump);
-        animasi.SetTrigger("jump");
+        if(isGrounded()){
+            badan.velocity = new Vector2(badan.velocity.x, jumpPower);
+            animasi.SetTrigger("jump");
+        }
+        else if(onWall() && !isGrounded()) {
+            if(moveHorizontal == 0){
+                badan.velocity = new Vector2(-Mathf.Sign(transform.localScale.x), 0);
+                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            }else{
+                badan.velocity = new Vector2(-Mathf.Sign(transform.localScale.x), 5);
+            }
+            wallJumpCooldown = 0;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -71,9 +97,3 @@ public class PlayerMovement : MonoBehaviour
     }
 }
 
-            // if(Input.GetKey(KeyCode.Space)){
-            //     moveVertical = 1;
-            // }
-            // else if(Input.GetKey(KeyCode.W)){
-            //     moveVertical = 1;
-            // }   
