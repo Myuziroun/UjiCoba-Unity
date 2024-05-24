@@ -7,26 +7,33 @@ public class Projectile : MonoBehaviour
    private bool hit;
    private BoxCollider2D boxCollider;
    private Animator animasi;
+   private float longProjectile ;
 
-   void Awake()
+   private void Awake()
    {
     boxCollider = GetComponent<BoxCollider2D>();
     animasi = GetComponent<Animator>();
    }
-   void Update()
+   private void Update()
    {
     if(hit) return;
     float movementSpeed = speed * Time.deltaTime * direction;
     transform.Translate(movementSpeed, 0, 0);
+
+    longProjectile += Time.deltaTime;
+    if(longProjectile > 5) gameObject.SetActive(false);
    }
-   void OnTriggerEnter2D(Collider2D collision)
+   private void OnTriggerEnter2D(Collider2D collision)
    {
     hit = true;
     boxCollider.enabled = false;
     animasi.SetTrigger("explode");
+    Debug.Log("after explode");
    }
    public void setDirection(float _direction)
    {
+    Debug.Log("before explode");
+    longProjectile = 0;
     direction = _direction;
     gameObject.SetActive(true);
     hit = false;
@@ -41,5 +48,7 @@ public class Projectile : MonoBehaviour
     private void Deactivate(){
         gameObject.SetActive(false);
     }
+
+  
 
 }
