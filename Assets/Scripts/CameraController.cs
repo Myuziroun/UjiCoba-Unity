@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
@@ -12,14 +13,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float aheadDistance;
     [SerializeField] private float cameraSpeed;
+    [SerializeField] private float aheadDistanceTop;
+    [SerializeField] private float cameraSpeedTop;
+    private float lookAheadTop;
     private float lookAhead;
     private  void Update()
     {
-        // Room Camera
-        //  
+        // follow player in top
+        if(player.position.y >= 3f){
+            lookAheadTop = Mathf.Lerp(lookAheadTop, aheadDistanceTop * player.localScale.y, Time.deltaTime * cameraSpeedTop);
+            transform.position = new Vector3(player.position.x, player.position.y - lookAheadTop , transform.position.z);
+            // lookAhead = Mathf.Lerp(lookAhead, aheadDistance * player.localScale.y, Time.deltaTime * cameraSpeed);
+            // transform.position = new Vector3(player.position.x, player.position.y - lookAhead, transform.position.z);
+        }else{
         // Follow Player
-         transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
-        lookAhead = Mathf.Lerp(lookAhead, aheadDistance * player.localScale.x , Time.deltaTime * cameraSpeed);
+            lookAheadTop = Mathf.Lerp(lookAheadTop, aheadDistanceTop * player.localScale.y, Time.deltaTime * cameraSpeedTop);
+            lookAhead = Mathf.Lerp(lookAhead, aheadDistance * player.localScale.x , Time.deltaTime * cameraSpeed);
+            transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
+        }
     }
     public void MoveToNewRoom(Transform _newRoom){
         currentPosX = _newRoom.position.x;

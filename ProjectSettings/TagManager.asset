@@ -42,3 +42,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3836453459
+    locked: 0
+  - name: Foreground
+    uniqueID: 4169596963
+    locked: 0
+  - name: Player
+    uniqueID: 3712953465
+    locked: 0
+  - name: Ground
+    uniqueID: 4282768261
+    locked: 0
+  - name: Projectile
+    uniqueID: 862208987
+    locked: 0

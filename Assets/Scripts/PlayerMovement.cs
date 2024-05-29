@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float speed = 10f;
-    private float jumpPower = 4.5f;
+    [SerializeField] private float jumpPower;
     [SerializeField]private LayerMask groundLayer;
     [SerializeField]private LayerMask wallLayer;
     private Rigidbody2D badan;
@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 badan.velocity = new Vector2(-Mathf.Sign(transform.localScale.x), 5);
             }
             wallJumpCooldown = 0;
+            Debug.Log(wallJumpCooldown);
         }
     }
 

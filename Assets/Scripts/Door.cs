@@ -15,6 +15,8 @@ public class NewBehaviourScript : MonoBehaviour
             }else{
                 cam.MoveToNewRoom(previousRoom);
             }
+        }else if(collision == null){
+            Debug.Log("Collision is null");
         }
     }
 }
