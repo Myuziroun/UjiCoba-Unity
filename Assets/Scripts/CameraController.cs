@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     private  void Update()
     {
         // follow player in top
-        if(player.position.y >= 3f){
+        if(player.position.y >= 3.5f){
             lookAheadTop = Mathf.Lerp(lookAheadTop, aheadDistanceTop * player.localScale.y, Time.deltaTime * cameraSpeedTop);
             transform.position = new Vector3(player.position.x, player.position.y - lookAheadTop , transform.position.z);
             // lookAhead = Mathf.Lerp(lookAhead, aheadDistance * player.localScale.y, Time.deltaTime * cameraSpeed);
