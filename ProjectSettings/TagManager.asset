@@ -48,11 +48,14 @@ TagManager:
   - name: Foreground
     uniqueID: 4169596963
     locked: 0
+  - name: Ground
+    uniqueID: 4282768261
+    locked: 0
   - name: Player
     uniqueID: 3712953465
     locked: 0
-  - name: Ground
-    uniqueID: 4282768261
+  - name: NPC
+    uniqueID: 3708370445
     locked: 0
   - name: Projectile
     uniqueID: 862208987

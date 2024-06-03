@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 public class Health : MonoBehaviour
-{   
-    [Header ("Health")]
-    [SerializeField] private float startingHealth;
+{
+    // [Header ("Health")]
+    public float startingHealth { get; private set; } = 3;
     public float currentHealth { get; private set; }
     private Animator animasi;
     private bool dead;
@@ -41,7 +41,7 @@ public class Health : MonoBehaviour
     public void GetHealth(float _healthValue){
         if(currentHealth > 0){
         currentHealth = Mathf.Clamp(currentHealth + _healthValue, 0, startingHealth);
-        }
+    }
     }
     // Iframes
     private IEnumerator Invunerability(){
