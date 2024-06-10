@@ -31,6 +31,7 @@ public class Health : MonoBehaviour
         }else{
             // Player Dead
             if(!dead){
+                // animasi.SetTrigger("die");
                 animasi.SetTrigger("died");
 
                 // Player Died
