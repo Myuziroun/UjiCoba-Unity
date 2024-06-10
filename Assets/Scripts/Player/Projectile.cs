@@ -28,6 +28,10 @@ public class Projectile : MonoBehaviour
     hit = true;
     boxCollider.enabled = false;
     animasi.SetTrigger("explode");
+
+    if(collision.tag == "Enemy"){
+            collision.GetComponent<Health>().takeDamage(1);
+    }
     Debug.Log("after explode");
    }
    public void setDirection(float _direction)
