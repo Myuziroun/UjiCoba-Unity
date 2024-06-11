@@ -14,6 +14,10 @@ public class Health : MonoBehaviour
     [SerializeField] private float numberOfSlashed;
     private SpriteRenderer spriteRend;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip hurtSound;
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -26,6 +30,8 @@ public class Health : MonoBehaviour
         if(currentHealth > 0 ){
             // Player Hurt
             animasi.SetTrigger("hurt");
+            //sound hurt
+            SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(Invunerability());
             // iframes
         }else{
@@ -33,7 +39,9 @@ public class Health : MonoBehaviour
             if(!dead){
                 // animasi.SetTrigger("die");
                 animasi.SetTrigger("died");
-
+                // sound die
+                SoundManager.instance.PlaySound(dieSound);
+                
                 // Player Died
                 if(GetComponent<PlayerMovement>() != null){
                     GetComponent<PlayerMovement>().enabled = false;

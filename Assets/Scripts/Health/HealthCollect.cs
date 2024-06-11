@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 public class HealthCollect : MonoBehaviour
 {
     [SerializeField] private float healthValue;
+    [Header("Sound")]
+    [SerializeField] private AudioClip collectHealthSound;
 
     // private void Start()
     // {
@@ -17,6 +19,7 @@ public class HealthCollect : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            SoundManager.instance.PlaySound(collectHealthSound);
             collision.GetComponent<Health>().GetHealth(healthValue);
             gameObject.SetActive(false);
         }

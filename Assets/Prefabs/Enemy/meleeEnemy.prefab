@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iframesDuration: 0
   numberOfSlashed: 0
+  dieSound: {fileID: 8300000, guid: c4a49ef7b0bf879438f0ee18949cf3da, type: 3}
+  hurtSound: {fileID: 8300000, guid: bb842cb35a43c144bb0a745b0e67b50e, type: 3}
 --- !u!114 &2305259334755010068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,9 +184,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCooldown: 2
   range: 2.5
-  colliderDistance: 0.45
   damage: 2
+  colliderDistance: 0.45
   boxCollider: {fileID: 1994766438441429133}
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  soundMeleeAttack: {fileID: 8300000, guid: 180e7cfb5c2cfd446996189286bc871a, type: 3}

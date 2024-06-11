@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float moveHorizontal;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip jumpSound;
+
     
     private void Awake(){
         // Untuk mendapatkan preference pada Rigidbody2D, Animator, BoxCollider2D dari objek
@@ -52,8 +56,11 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log($"this on wall, {onWall()}");
                 Debug.Log($"this on ground, {isGrounded()}");
             }
-            if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)){
+            if(Input.GetKey(KeyCode.Space)){
                 JumpButton();
+                if(Input.GetKeyDown(KeyCode.Space)&& isGrounded()){
+                    SoundManager.instance.PlaySound(jumpSound);
+                }
             }
         }else{
             wallJumpCooldown += Time.deltaTime;
@@ -63,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     // untuk melakukan lompatan
     private void JumpButton(){
         if(isGrounded()){
+            // SoundManager.instance.PlaySound(jumpSound);
             badan.velocity = new Vector2(badan.velocity.x, jumpPower);
             animasi.SetTrigger("jump");
         }
