@@ -123,6 +123,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5697906118150554781}
     m_Modifications:
+    - target: {fileID: 4704389273071270952, guid: 6068ad2455f266748a318254edb540cb, type: 3}
+      propertyPath: startingHealth
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6524340847081725132, guid: 6068ad2455f266748a318254edb540cb, type: 3}
       propertyPath: m_Name
       value: meleeEnemy

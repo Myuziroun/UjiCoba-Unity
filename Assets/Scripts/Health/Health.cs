@@ -4,7 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     // [Header ("Health")]
-    public float startingHealth { get; private set; } = 3;
+    [SerializeField] private float startingHealth;
     public float currentHealth { get; private set; }
     private Animator animasi;
     private bool dead;
@@ -13,6 +13,10 @@ public class Health : MonoBehaviour
     [SerializeField] private float iframesDuration;
     [SerializeField] private float numberOfSlashed;
     private SpriteRenderer spriteRend;
+
+    [Header("Components")]
+    [SerializeField] private Behaviour[] components;
+    private bool invulnerable;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip dieSound;
@@ -37,11 +41,15 @@ public class Health : MonoBehaviour
         }else{
             // Player Dead
             if(!dead){
+
+                foreach(Behaviour component in components){
+                    component.enabled = false;
+                }
                 // animasi.SetTrigger("die");
-                animasi.SetTrigger("died");
                 // sound die
                 SoundManager.instance.PlaySound(dieSound);
                 
+                animasi.SetTrigger("died");
                 // Player Died
                 if(GetComponent<PlayerMovement>() != null){
                     GetComponent<PlayerMovement>().enabled = false;
@@ -53,17 +61,25 @@ public class Health : MonoBehaviour
                 if(GetComponent<MeleeEnemy>() != null){
                     GetComponent<MeleeEnemy>().enabled = false;
                 }
-
                 dead = true;
-
-            
             }
         }
     }
     public void GetHealth(float _healthValue){
-        if(currentHealth > 0){
         currentHealth = Mathf.Clamp(currentHealth + _healthValue, 0, startingHealth);
+
     }
+    public void RespawnHealth(){
+        // dead = false;
+        GetHealth(startingHealth);
+        animasi.ResetTrigger("died");
+        animasi.Play("idle");
+        StartCoroutine(Invunerability());
+        Debug.Log("Respawn");
+
+        foreach(Behaviour component in components){
+                    component.enabled = true;
+                }
     }
     // Iframes
     private IEnumerator Invunerability(){
@@ -76,6 +92,9 @@ public class Health : MonoBehaviour
             yield return new WaitForSeconds(iframesDuration / (numberOfSlashed * 2) );
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
-
+    }
+    private void Deactivate(){
+        gameObject.SetActive(false);
     }
 }
+
