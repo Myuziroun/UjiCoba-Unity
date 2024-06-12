@@ -7,11 +7,21 @@ public class PlayerRespawn : MonoBehaviour
     private Transform currentCheckpoint;
     private Health playerHealth;
 
+    private UIManager uiManager;
+
     private void Awake()
     {
         playerHealth = GetComponent<Health>();
+        uiManager = FindAnyObjectByType<UIManager>();
     }
-    private void Respawn(){
+    private void CheckRespawn(){
+        // Check if check point available
+        if(currentCheckpoint == null){
+            // show game over screen
+            uiManager.GameOver(); 
+            return; //don't execute the rest of this function
+        }
+
         playerHealth.RespawnHealth();
         transform.position = currentCheckpoint.position;
         Debug.Log("succes");
