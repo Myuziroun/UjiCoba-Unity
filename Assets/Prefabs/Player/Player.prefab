@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpointSound: {fileID: 8300000, guid: 99a0980bfaf5c424981a0d6333cd57fc, type: 3}
+  deadthCount: 0
 --- !u!95 &814825172660344048
 Animator:
   serializedVersion: 5

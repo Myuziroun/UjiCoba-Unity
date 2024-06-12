@@ -69,8 +69,13 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + _healthValue, 0, startingHealth);
 
     }
+    public void addHealth(float _healthAdd){
+        if(currentHealth > 0){
+            currentHealth = Mathf.Clamp(currentHealth + _healthAdd, 0, startingHealth);
+        }
+    }
     public void RespawnHealth(){
-        // dead = false;
+        dead = false;
         GetHealth(startingHealth);
         animasi.ResetTrigger("died");
         animasi.Play("idle");
