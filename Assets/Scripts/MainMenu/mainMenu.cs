@@ -7,7 +7,7 @@ public class mainMenu : MonoBehaviour
     // Start is called before the first frame update
     public void StartGame(){
         SoundManager.instance.PlaySound(clickTable);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
    public void QuitGame(){
         Application.Quit();
