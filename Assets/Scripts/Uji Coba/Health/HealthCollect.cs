@@ -19,7 +19,7 @@ public class HealthCollect : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            SoundManager.instance.PlaySound(collectHealthSound);
+            // SoundManager.instance.PlaySound(collectHealthSound);
             collision.GetComponent<Health>().addHealth(healthValue);
             gameObject.SetActive(false);
         }

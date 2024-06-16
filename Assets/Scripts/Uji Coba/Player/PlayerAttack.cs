@@ -8,39 +8,39 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float attackCooldown;
     [SerializeField] private Transform firepoint;
-    [SerializeField] private GameObject[] fireballs;
-    [SerializeField] private AudioClip fireballSound;
+    [SerializeField] private GameObject[] projectile;
+    // [SerializeField] private AudioClip fireballSound;
     private Animator animasi;
-    private PlayerMovement playerMovement;
+    private playerMovent playerMovement;
     private float cooldownTimer = Mathf.Infinity;
 
     private void Awake()
     {
         animasi = GetComponent<Animator>();
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<playerMovent>();
     }
     private void Update()
     {
-        if(Input.GetKey(KeyCode.I) && cooldownTimer > attackCooldown && playerMovement.canAttack()){
+        if(Input.GetKey(KeyCode.I) && cooldownTimer > attackCooldown && playerMovement.canAttacks()){
             buttonAttack();
-        }else if(Input.GetMouseButton(0) && cooldownTimer > attackCooldown && playerMovement.canAttack()){
+        }else if(Input.GetMouseButton(0) && cooldownTimer > attackCooldown && playerMovement.canAttacks()){
             buttonAttack();
         }
         cooldownTimer += Time.deltaTime;
     }
     private void buttonAttack(){
-        SoundManager.instance.PlaySound(fireballSound);
+        // SoundManager.instance.PlaySound(fireballSound);
         animasi.SetTrigger("attack");
         cooldownTimer = 0;
 
-        fireballs[findProjectile()].transform.position = firepoint.position;
-        fireballs[findProjectile()].GetComponent<Projectile>().setDirection(Mathf.Sign(transform.localScale.x));
+        projectile[findProjectile()].transform.position = firepoint.position;
+        projectile[findProjectile()].GetComponent<Projectile>().setDirection(Mathf.Sign(transform.localScale.x));
     }
 
     private int findProjectile(){
 
-        for(int i = 0; i < fireballs.Length; i ++ ){
-            if(!fireballs[i].activeInHierarchy){
+        for(int i = 0; i < projectile.Length; i ++ ){
+            if(!projectile[i].activeInHierarchy){
                 return i;
             }
         }

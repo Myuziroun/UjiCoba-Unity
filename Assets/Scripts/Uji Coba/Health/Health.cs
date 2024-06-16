@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
             // Player Hurt
             animasi.SetTrigger("hurt");
             //sound hurt
-            SoundManager.instance.PlaySound(hurtSound);
+            // SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(Invunerability());
             // iframes
         }else{
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
                 }
                 // animasi.SetTrigger("die");
                 // sound die
-                SoundManager.instance.PlaySound(dieSound);
+                // SoundManager.instance.PlaySound(dieSound);
                 
                 animasi.SetTrigger("died");
                 // Player Died
@@ -61,6 +61,7 @@ public class Health : MonoBehaviour
                 if(GetComponent<MeleeEnemy>() != null){
                     GetComponent<MeleeEnemy>().enabled = false;
                 }
+               
                 dead = true;
             }
         }
