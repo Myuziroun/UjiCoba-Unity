@@ -25,14 +25,19 @@ public class Projectile : MonoBehaviour
    }
    private void OnTriggerEnter2D(Collider2D collision)
    {
-    hit = true;
-    boxCollider.enabled = false;
-    animasi.SetTrigger("explode");
+    if(collision.tag != "healthCollect"){
+        hit = true;
+        boxCollider.enabled = false;
+        animasi.SetTrigger("explode");
 
-    if(collision.tag == "Enemy"){
+        if(collision.tag == "Enemy"){
             collision.GetComponent<Health>().takeDamage(1);
+    }else{
+        return;
     }
-    Debug.Log("after explode");
+        Debug.Log("after explode");
+    }
+    
    }
    public void setDirection(float _direction)
    {

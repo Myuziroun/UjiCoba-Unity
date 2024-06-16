@@ -7,21 +7,18 @@ using Unity.VisualScripting;
 public class HealthCollect : MonoBehaviour
 {
     [SerializeField] private float healthValue;
-    [Header("Sound")]
-    [SerializeField] private AudioClip collectHealthSound;
-
-    // private void Start()
-    // {
-    //     totalHealthBar.fillAmount = playerHealth.currentHealth + healthValue;
-    // }
-   
+    private Health playerHealth;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        playerHealth = collision.GetComponent<Health>();
+        if (collision.tag == "Player" && playerHealth != null && playerHealth.currentHealth < playerHealth.startingHealth)
         {
-            // SoundManager.instance.PlaySound(collectHealthSound);
+            // SoundManager.instance.PlaySound(collectHe althSound);
             collision.GetComponent<Health>().addHealth(healthValue);
             gameObject.SetActive(false);
+        } else{
+            return;
         }
     }
 

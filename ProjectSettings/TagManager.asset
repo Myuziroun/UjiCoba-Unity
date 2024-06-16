@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Enemy
   - Checkpoint
+  - projectile
+  - healthCollect
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - wall
   - Player
   - Enemy
-  - 
-  - 
+  - Projectile
+  - healthCollect
   - 
   - 
   - 
@@ -53,14 +55,14 @@ TagManager:
   - name: Arrow Traps
     uniqueID: 1153707433
     locked: 0
-  - name: Foreground
-    uniqueID: 4169596963
-    locked: 0
   - name: Ground
     uniqueID: 4282768261
     locked: 0
   - name: Player
     uniqueID: 3712953465
+    locked: 0
+  - name: Foreground
+    uniqueID: 4169596963
     locked: 0
   - name: NPC
     uniqueID: 3708370445
