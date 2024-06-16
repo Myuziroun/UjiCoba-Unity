@@ -1,3 +1,4 @@
+// using System.Numerics;
 using UnityEngine;
 
 public class playerMovent : MonoBehaviour
@@ -11,21 +12,22 @@ public class playerMovent : MonoBehaviour
     private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask groundLayer;
     private float wallJumpCooldown;
+    private bool isFalling;
+
+
 
     private  void Awake()
     {
         badan = GetComponent<Rigidbody2D>();
         animasi = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        badan.interpolation = RigidbodyInterpolation2D.Interpolate;
+        badan.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     private void Update()
     {
-        playerGerak();
-    }
-    private void playerGerak(){
         moveHorizontal = Input.GetAxis("Horizontal");
-        badan.velocity = new Vector2(moveHorizontal * speed, badan.velocity.y);
-
+        
         // player berputar arah pada karakter
         if(moveHorizontal > 0.01f){
             transform.localScale = Vector3.one;
@@ -45,12 +47,25 @@ public class playerMovent : MonoBehaviour
         }else{
             wallJumpCooldown += Time.deltaTime;
         }
+        isFalling = !isGrounded() && badan.velocity.y < 0;
 
+    }
+    private void FixedUpdate()
+    {
+        Vector2 movement = new Vector2(moveHorizontal * speed, badan.velocity.y);
+        badan.velocity = movement;
+
+        // menangani kondisi saat jatuh
+        if (isFalling && isGrounded())
+        {
+            badan.velocity = new Vector2(badan.velocity.x, 0f);
+        }
     }
     private void playerLompat(){
         if(isGrounded()){
             badan.velocity = new Vector2(badan.velocity.x, jumpPower);
             animasi.SetTrigger("jump");
+            wallJumpCooldown = 0;
         }
         // wallJumpCooldown += Time.deltaTime;
     }

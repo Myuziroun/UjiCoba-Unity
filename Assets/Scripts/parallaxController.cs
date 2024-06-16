@@ -12,7 +12,7 @@ public class parallaxController : MonoBehaviour
     Material[] mat;
     float[] backSpeed;
     float farthestBack;
-    [Range(0.1f, 0.5f)]
+    [Range(0.01f, 0.5f)]
     public float parallaxSpeed;
 
     private void Start()

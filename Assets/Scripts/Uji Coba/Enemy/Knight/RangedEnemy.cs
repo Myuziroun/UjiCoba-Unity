@@ -67,7 +67,7 @@ public class RangedEnemy : MonoBehaviour
     private void rangedAttack(){
         cooldownTimer = 0;
         fireballs[findFireballs()].transform.position = firePoint.position;
-        fireballs[findFireballs()].GetComponent<EnemyProjectile>().ActivateProjectile();
+        // fireballs[findFireballs()].GetComponent<EnemyProjectile>().ActivateProjectile();
     }
 
     private int findFireballs(){

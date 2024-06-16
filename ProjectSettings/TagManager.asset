@@ -47,6 +47,12 @@ TagManager:
   - name: Background
     uniqueID: 3836453459
     locked: 0
+  - name: BackGround Second
+    uniqueID: 1479372309
+    locked: 0
+  - name: Arrow Traps
+    uniqueID: 1153707433
+    locked: 0
   - name: Foreground
     uniqueID: 4169596963
     locked: 0
