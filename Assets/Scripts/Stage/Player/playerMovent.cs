@@ -4,7 +4,7 @@ using UnityEngine;
 public class playerMovent : MonoBehaviour
 {
     private float speed = 5;
-    private float jumpPower = 6;
+    private float jumpPower = 12;
     private float moveHorizontal;
     private float moveVertikal;
     private Rigidbody2D badan;
