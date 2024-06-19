@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - projectile
   - healthCollect
+  - Ladder
   layers:
   - Default
   - TransparentFX
