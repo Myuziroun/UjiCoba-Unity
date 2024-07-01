@@ -10,6 +10,7 @@ TagManager:
   - projectile
   - healthCollect
   - Ladder
+  - Congratulation
   layers:
   - Default
   - TransparentFX
