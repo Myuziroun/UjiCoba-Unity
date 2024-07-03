@@ -42,7 +42,7 @@ public class GrimReaperMelee : MonoBehaviour
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
-                anim.SetTrigger("meleeAttack");
+                anim.SetTrigger("Attack");
             }
         }
         if(enemyPatrol!= null)
