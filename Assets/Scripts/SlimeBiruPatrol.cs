@@ -15,9 +15,22 @@ public class SlimeBiruPatrol : MonoBehaviour
    private Vector3 initScale;
    private bool movingLeft;
 
+    [Header ("Idle Behaviour")]
+   [SerializeField] private float IdleDuration;
+   private float IdleTimer;
+
+    [Header ("Enemy Animator")]
+   [SerializeField] private Animator anim;
+
    private void Awake()
    {
     initScale = enemy.localScale;
+   }
+   
+
+   private void OnDisable()
+   {
+      anim.SetBool("moving", false);
    }
 
    private void Update()
@@ -43,12 +56,21 @@ public class SlimeBiruPatrol : MonoBehaviour
 
    private void DirectionChange()
    {
+    anim.SetBool("moving", false);
+
+    IdleTimer += Time.deltaTime;
+
+    if(IdleTimer > IdleDuration)
+
     movingLeft = !movingLeft;
    }
 
    private void MoveInDirection(int _direction)
    {
-    //
+    IdleTimer = 0;
+    anim.SetBool("moving", true);
+
+    //make enemy face direction
     enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction, initScale.y, initScale.z);
 
     //Move in direction
