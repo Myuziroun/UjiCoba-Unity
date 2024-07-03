@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    // [Header ("Health")]
     public float startingHealth;
     public float currentHealth { get; private set; }
     private Animator animasi;
@@ -29,53 +28,69 @@ public class Health : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
     }
 
-    public void takeDamage(float _damage){
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0 , startingHealth);
-        if(currentHealth > 0 ){
-            // Player Hurt
+    public void takeDamage(float _damage)
+    {
+        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        if (currentHealth > 0)
+        {
             animasi.SetTrigger("hurt");
-            //sound hurt
-            // SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(Invunerability());
-            // iframes
-        }else{
-            // Player Dead
-            if(!dead){
-
-                foreach(Behaviour component in components){
+        }
+        else
+        {
+            if (!dead)
+            {
+                foreach (Behaviour component in components)
+                {
                     component.enabled = false;
                 }
-                // animasi.SetTrigger("die");
-                // sound die
-                // SoundManager.instance.PlaySound(dieSound);
-                
                 animasi.SetTrigger("died");
-                // Player Died
-                if(GetComponent<PlayerMovement>() != null){
+                if (GetComponent<PlayerMovement>() != null)
+                {
                     GetComponent<PlayerMovement>().enabled = false;
                 }
-                // Enemy Died
-                if(GetComponentInParent<EnemyPatrol>() != null){
+                if (GetComponentInParent<EnemyPatrol>() != null)
+                {
                     GetComponentInParent<EnemyPatrol>().enabled = false;
                 }
-                if(GetComponent<MeleeEnemy>() != null){
+                if (GetComponent<MeleeEnemy>() != null)
+                {
                     GetComponent<MeleeEnemy>().enabled = false;
                 }
-               
                 dead = true;
             }
         }
     }
-    public void GetHealth(float _healthValue){
-        currentHealth = Mathf.Clamp(currentHealth + _healthValue, 0, startingHealth);
 
+    public void GetHealth(float _healthValue)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + _healthValue, 0, startingHealth);
     }
-    public void addHealth(float _healthAdd){
-        if(currentHealth > 0){
+
+    public void addHealth(float _healthAdd)
+    {
+        if (currentHealth > 0)
+        {
             currentHealth = Mathf.Clamp(currentHealth + _healthAdd, 0, startingHealth);
         }
     }
-    public void RespawnHealth(){
+
+    public void Respawn()
+    {
+        dead = false;
+        addHealth(startingHealth);
+        animasi.ResetTrigger("died");
+        animasi.Play("idle");
+        StartCoroutine(Invunerability());
+
+        foreach (Behaviour component in components)
+        {
+            component.enabled = true;
+        }
+    }
+
+    public void RespawnHealth()
+    {
         dead = false;
         GetHealth(startingHealth);
         animasi.ResetTrigger("died");
@@ -83,24 +98,27 @@ public class Health : MonoBehaviour
         StartCoroutine(Invunerability());
         Debug.Log("Respawn");
 
-        foreach(Behaviour component in components){
-                    component.enabled = true;
-                }
+        foreach (Behaviour component in components)
+        {
+            component.enabled = true;
+        }
     }
-    // Iframes
-    private IEnumerator Invunerability(){
+
+    private IEnumerator Invunerability()
+    {
         Physics2D.IgnoreLayerCollision(10, 11, true);
         for (int i = 0; i < numberOfSlashed; i++)
         {
             spriteRend.color = new Color(1, 0, 0, 0.5f);
-            yield return new WaitForSeconds(iframesDuration / (numberOfSlashed * 2) );
+            yield return new WaitForSeconds(iframesDuration / (numberOfSlashed * 2));
             spriteRend.color = Color.white;
-            yield return new WaitForSeconds(iframesDuration / (numberOfSlashed * 2) );
+            yield return new WaitForSeconds(iframesDuration / (numberOfSlashed * 2));
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
-    private void Deactivate(){
+
+    private void Deactivate()
+    {
         gameObject.SetActive(false);
     }
 }
-
