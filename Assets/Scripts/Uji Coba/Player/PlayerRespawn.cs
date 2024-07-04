@@ -1,13 +1,15 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private AudioClip checkpointSound;
     private Transform currentCheckpoint;
     private Health playerHealth;
-    private int deadthCount = 0;
+    private int deathCount = 0; // Perbaikan nama variabel dari deadthCount ke deathCount
     private UIManager uiManager;
+
+    public Text WINTEXT;
 
     private void Awake()
     {
@@ -15,42 +17,81 @@ public class PlayerRespawn : MonoBehaviour
         uiManager = FindAnyObjectByType<UIManager>();
     }
 
-
     private void CheckRespawn()
     {
-        deadthCount += 1; 
-        // Check if check point available
+        deathCount += 1;
         if (currentCheckpoint == null)
         {
-            // show game over screen
             uiManager.GameOver();
             Debug.Log("IS null");
             gameObject.SetActive(false);
-            return; //don't execute the rest of this function
-        }else{
-            if(deadthCount >= 2){
+            return;
+        }
+        else
+        {
+            if (deathCount >= 2)
+            {
                 uiManager.GameOver();
-            }else{
+            }
+            else
+            {
                 Debug.Log("Not Null");
                 playerHealth.RespawnHealth();
                 transform.position = currentCheckpoint.position;
-                Debug.Log("succes");
-                // Move Camera to checkpoints room(for this to work the checkpoint objects has to placed as a child of the room object)
+                Debug.Log("success");
                 Camera.main.GetComponent<CameraController>().MoveToNewRoom(currentCheckpoint.parent);
             }
         }
-        //validasi    
-    }
-    //Activate checkpoints
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.transform.tag == "Checkpoint"){
-            currentCheckpoint = collision.transform;
-            SoundManager.instance.PlaySound(checkpointSound);
-            collision.GetComponent<Collider2D>().enabled = false;
-            collision.GetComponent<Animator>().SetTrigger("appear");
-        }
-        
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Win")
+        {
+            Debug.Log("Win collision detected");
+            WINTEXT.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        if (other.transform.tag == "Checkpoint")
+        {
+            currentCheckpoint = other.transform;
+
+            if (SoundManager.instance != null)
+            {
+                if (checkpointSound != null)
+                {
+                    SoundManager.instance.PlaySound(checkpointSound);
+                }
+                else
+                {
+                    Debug.LogError("checkpointSound is not assigned.");
+                }
+            }
+            else
+            {
+                Debug.LogError("SoundManager instance is null.");
+            }
+
+            var collider = other.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+            else
+            {
+                Debug.LogError("Collider2D component is missing.");
+            }
+
+            var animator = other.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.SetTrigger("appear");
+            }
+            else
+            {
+                Debug.LogError("Animator component is missing.");
+            }
+        }
+    }
 }
