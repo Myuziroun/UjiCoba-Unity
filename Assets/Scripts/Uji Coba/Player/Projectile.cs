@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
         animasi.SetTrigger("explode");
 
         if(collision.tag == "Enemy"){
-            collision.GetComponent<Health>().takeDamage(1);
+            collision.GetComponent<healthSlimeBiru>().takeDamage(1);
     }else{
         return;
     }
